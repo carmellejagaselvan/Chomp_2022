@@ -85,6 +85,8 @@ public class Chomp implements Runnable, MouseListener {
         randomPlayer = new RandomPlayer();
         aiPlayer = new MyPlayer();
 
+        oneMove(3,1,0);
+
 
     }//
 
@@ -111,10 +113,42 @@ public class Chomp implements Runnable, MouseListener {
                     }
                 }
             }
-
         }
+    }
 
+    public void oneMove(int a, int b, int c){
+        System.out.println("Boards in one move: ");
+        if (c>0){
+            for (int i=1; i<=c; i++){
+                System.out.println(a +""+ b +""+ (c-i));
+            }
+        }
+        if (b>0){
+//            if (b==c){
+//                for (int i=1; i<=b; i++){
+//                    System.out.println(a +""+ (b-i) +""+ (c-i));
+//                }
+//            }
+//            if (b>c){
+//                int y = b;
+//                for (int x = b-c; x>=0; x--){
+//                    System.out.println(a +""+ (b-1) +""+ c);
+//                    y--;
+//                }
+//                for (int i=1; i<=y; i++){
+//                    System.out.println(a +""+ (y-i) +""+ (c-i));
+//                }
+//            }
 
+            for (int i=1; i<4; i++){
+                if ((b-i)>c && (b-i)>=0){
+                    System.out.println(a +""+ (b-i) +""+ c);
+                }
+                if ((b-i)<=c && (b-i)>=0){
+                    System.out.println(a +""+ (b-i) +""+ (b-i));
+                }
+            }
+        }
     }
 
     public void run() {
