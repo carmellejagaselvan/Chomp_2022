@@ -23,9 +23,9 @@ public class MyPlayer {
             }
         }
 
-        int a = 2;
-        int b = 2;
-        int c = 2;
+        int a = 3;
+        int b = 3;
+        int c = 3;
         System.out.println();
 
         for (int x=a; x<4; x++){

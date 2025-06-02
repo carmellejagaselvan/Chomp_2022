@@ -10,6 +10,8 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.*;
+import java.util.ArrayList;
+
 
 //Keyboard and Mouse
 import java.awt.event.*;
@@ -53,6 +55,7 @@ public class Chomp implements Runnable, MouseListener {
     //players
     public RandomPlayer randomPlayer;
     public MyPlayer aiPlayer;
+    public ArrayList<Board> LoserBoards = new ArrayList<Board>();
 
 
     // Main method definition
@@ -67,6 +70,10 @@ public class Chomp implements Runnable, MouseListener {
     // This section is the setup portion of the program
     // Initialize your variables and construct your program objects here.
     public Chomp() {
+
+        LoserBoards.add(new Board(1,0,0));
+        System.out.println(LoserBoards.get(0).boards[0]);
+
 
         setUpGraphics();
 
@@ -85,7 +92,18 @@ public class Chomp implements Runnable, MouseListener {
         randomPlayer = new RandomPlayer();
         aiPlayer = new MyPlayer();
 
-        oneMove(2,1,0);
+        for (int a=0; a<4; a++){
+            for (int b=0; b<4; b++){
+                for (int c=0; c<4; c++){
+                    if(b<=a && c<=b && a!=0){
+                        oneMove(a,b,c);
+                    }
+                }
+            }
+        }
+        printLosingBoards();
+
+        //oneMove(1,1,1);
 
 
     }//
@@ -118,36 +136,112 @@ public class Chomp implements Runnable, MouseListener {
 
     public void oneMove(int a, int b, int c){
         System.out.println("Boards in one move: ");
+        boolean isLosingBoard = true;
         if (c>0){
             for (int i=1; i<=c; i++){
-                System.out.println(a +""+ b +""+ (c-i));
+                System.out.println("Given board: " + a + "" + b + "" + c);
+                System.out.println("Board in one move: " + a +""+ b +""+ (c-i));
+                for(int f=0; f<LoserBoards.size(); f++) {
+                    if (a == LoserBoards.get(f).boards[0] && b == LoserBoards.get(f).boards[1] && (c - i) == LoserBoards.get(f).boards[2]) {
+                        //boolean turn on
+                        isLosingBoard = false;
+                        System.out.println("hooray!");
+                        System.out.println("(3,"+(a+1-i)+")");
+
+                    }
+                }
             }
         }
         if (b>0){
             for (int i=1; i<4; i++){
                 if ((b-i)>c && (b-i)>=0){
-                    System.out.println(a +""+ (b-i) +""+ c);
+                    System.out.println("Given board: " + a + "" + b + "" + c);
+                    System.out.println("Board in one move: " + a +""+ (b-i) +""+ c);
+                    for(int f=0; f<LoserBoards.size(); f++) {
+                        if (a == LoserBoards.get(f).boards[0] && (b - i) == LoserBoards.get(f).boards[1] && c == LoserBoards.get(f).boards[2]) {
+                            isLosingBoard = false;
+                            System.out.println("hooray!");
+                            System.out.println("(2,"+(a+1-i)+")");
+
+                        }
+                    }
                 }
                 if ((b-i)<=c && (b-i)>=0){
-                    System.out.println(a +""+ (b-i) +""+ (b-i));
+                    System.out.println("Given board: " + a + "" + b + "" + c);
+                    System.out.println("Board in one move: " + a +""+ (b-i) +""+ (b-i));
+                    for(int f=0; f<LoserBoards.size(); f++) {
+                        if (a == LoserBoards.get(f).boards[0] && (b - i) == LoserBoards.get(f).boards[1] && (b - i) == LoserBoards.get(f).boards[2]) {
+                            isLosingBoard = false;
+                            System.out.println("hooray!");
+                            System.out.println("(2,"+(a+1-i)+")");
+
+                        }
+                    }
                 }
             }
         }
 
         if (a>0){
             for (int i=1; i<4; i++){
-                if ((a-i)>c && (a-i)>b && (a-i)>=0){
-                    System.out.println((a-i) + "" + b + "" + c);
+                if ((a-i)>c && (a-i)>b && (a-i)>=0) {
+                    System.out.println("Given board: " + a + "" + b + "" + c);
+
+                    System.out.println("Board in one move: " + (a - i) + "" + b + "" + c);
+                    for (int f = 0; f < LoserBoards.size(); f++){
+                        if ((a - i) == LoserBoards.get(f).boards[0] & b == LoserBoards.get(f).boards[1] & c == LoserBoards.get(f).boards[2]) {
+                            isLosingBoard = false;
+
+                            System.out.println("hooray!");
+                            System.out.println("(1,"+(a+1-i)+")");
+
+
+                        }
+                    }
+
                 }
                 if ((a-i)>c && (a-i)<=b && (a-i)>=0){
-                    System.out.println((a-i) + "" + (a-i) + "" + c);
+                    System.out.println("Given board: " + a + "" + b + "" + c);
+
+                    System.out.println("Board in one move: " + (a-i) + "" + (a-i) + "" + c);
+                    for(int f=0; f<LoserBoards.size(); f++) {
+                        if ((a - i) == LoserBoards.get(f).boards[0] & (a - i) == LoserBoards.get(f).boards[1] & c == LoserBoards.get(f).boards[2]) {
+                            isLosingBoard = false;
+
+                            System.out.println("hooray!");
+                            System.out.println("(1,"+(a+1-i)+")");
+
+                        }
+                    }
                 }
                 if ((a-i)<=c && (a-i)<=b && (a-i)>=0){
-                    System.out.println((a-i) + "" + (a-i) + "" + (a-i));
+                    System.out.println("Given board: " + a + "" + b + "" + c);
+
+                    System.out.println("Board in one move: " + (a-i) + "" + (a-i) + "" + (a-i));
+                    for(int f=0; f<LoserBoards.size(); f++) {
+                        if ((a - i) == LoserBoards.get(f).boards[0] & (a - i) == LoserBoards.get(f).boards[1] & (a - i) == LoserBoards.get(f).boards[2]) {
+                            isLosingBoard = false;
+                            System.out.println("hooray!");
+                            System.out.println("(1,"+(a+1-i)+")");
+
+                        }
+                    }
                 }
             }
         }
+        if (isLosingBoard == true){
+            LoserBoards.add(new Board(a,b,c));
+        }
+
     }
+
+    public void printLosingBoards(){
+        for(int f=0; f<LoserBoards.size(); f++){
+            System.out.println(LoserBoards.get(f).boards[0] +""+ LoserBoards.get(f).boards[1]+ ""+LoserBoards.get(f).boards[2]);
+        }
+        System.out.println(LoserBoards.size());
+    }
+
+
 
     public void run() {
 
